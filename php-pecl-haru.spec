@@ -5,7 +5,7 @@ Summary:	%{modname} - Haru PDF functions
 Summary(pl.UTF-8):	%{modname} - funkcje PDF haru
 Name:		%{php_name}-pecl-%{modname}
 Version:	1.0.4
-Release:	2
+Release:	3
 License:	PHP
 Group:		Development/Languages/PHP
 Source0:	http://pecl.php.net/get/%{modname}-%{version}.tgz
