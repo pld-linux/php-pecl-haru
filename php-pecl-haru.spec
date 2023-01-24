@@ -5,14 +5,15 @@ Summary:	%{modname} - Haru PDF functions
 Summary(pl.UTF-8):	%{modname} - funkcje PDF haru
 Name:		%{php_name}-pecl-%{modname}
 Version:	1.0.4
-Release:	5
+Release:	6
 License:	PHP
 Group:		Development/Languages/PHP
 Source0:	http://pecl.php.net/get/%{modname}-%{version}.tgz
 # Source0-md5:	be91eed4a46c7067d7877bbe8b64ac23
+Patch0:		haru-libharu.patch
 URL:		http://pecl.php.net/package/haru/
 BuildRequires:	%{php_name}-devel >= 3:5.0.4
-BuildRequires:	libharu-devel >= 2.0.8-2
+BuildRequires:	libharu-devel >= 2.4
 BuildRequires:	rpmbuild(macros) >= 1.650
 %{?requires_php_extension}
 Provides:	php(%{modname}) = %{version}
@@ -34,6 +35,7 @@ To rozszerzenie ma w PECL status: %{status}.
 %prep
 %setup -q -c
 mv %{modname}-%{version}/* .
+%patch0 -p1
 
 %build
 phpize

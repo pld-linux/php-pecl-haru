@@ -1,0 +1,56 @@
+--- haru-1.0.4/haru.c.orig	2012-12-23 12:17:58.000000000 +0100
++++ haru-1.0.4/haru.c	2023-01-24 21:14:58.215362453 +0100
+@@ -2120,7 +2120,7 @@ static PHP_METHOD(HaruPage, setLineCap)
+ 	switch (cap) {
+ 		case HPDF_BUTT_END:
+ 		case HPDF_ROUND_END:
+-		case HPDF_PROJECTING_SCUARE_END:
++		case HPDF_PROJECTING_SQUARE_END:
+ 			/* only these are valid */
+ 			break;
+ 		default:
+@@ -2196,7 +2196,7 @@ static PHP_METHOD(HaruPage, setDash)
+ {
+ 	php_harupage *page = (php_harupage *)zend_object_store_get_object(getThis() TSRMLS_CC);
+ 	HPDF_STATUS status;
+-	HPDF_UINT16 *pat = NULL;
++	HPDF_REAL *pat = NULL;
+ 	zval *pattern;
+ 	int pat_num = 0;
+ 	long phase;
+@@ -2222,7 +2222,7 @@ static PHP_METHOD(HaruPage, setDash)
+ 		zval **element, tmp, tmp_element;
+ 		int i = 0;
+ 
+-		pat = emalloc(pat_num * sizeof(HPDF_UINT16)); /* safe */
++		pat = emalloc(pat_num * sizeof(HPDF_REAL)); /* safe */
+ 
+ 		for (zend_hash_internal_pointer_reset(Z_ARRVAL_P(pattern));
+ 				zend_hash_get_current_data(Z_ARRVAL_P(pattern), (void **) &element) == SUCCESS;
+@@ -2245,7 +2245,7 @@ static PHP_METHOD(HaruPage, setDash)
+ 		}
+ 	}
+ 
+-	status = HPDF_Page_SetDash(page->h, (const HPDF_UINT16 *)pat, (HPDF_UINT)pat_num, (HPDF_UINT)phase);
++	status = HPDF_Page_SetDash(page->h, (const HPDF_REAL *)pat, (HPDF_UINT)pat_num, (HPDF_UINT)phase);
+ 
+ 	if (pat) {
+ 		efree(pat);
+@@ -5851,7 +5851,7 @@ static PHP_MINIT_FUNCTION(haru)
+ 	
+ 	HARU_CLASS_CONST(ce_harupage, "BUTT_END", HPDF_BUTT_END);
+ 	HARU_CLASS_CONST(ce_harupage, "ROUND_END", HPDF_ROUND_END);
+-	HARU_CLASS_CONST(ce_harupage, "PROJECTING_SCUARE_END", HPDF_PROJECTING_SCUARE_END);
++	HARU_CLASS_CONST(ce_harupage, "PROJECTING_SCUARE_END", HPDF_PROJECTING_SQUARE_END);
+ 
+ 	HARU_CLASS_CONST(ce_harupage, "MITER_JOIN", HPDF_MITER_JOIN);
+ 	HARU_CLASS_CONST(ce_harupage, "ROUND_JOIN", HPDF_ROUND_JOIN);
+@@ -5918,7 +5918,7 @@ static PHP_MINIT_FUNCTION(haru)
+ 	
+ 	HARU_CLASS_CONST(ce_haruencoder, "BYTE_TYPE_SINGLE", HPDF_BYTE_TYPE_SINGLE);
+ 	HARU_CLASS_CONST(ce_haruencoder, "BYTE_TYPE_LEAD", HPDF_BYTE_TYPE_LEAD);
+-	HARU_CLASS_CONST(ce_haruencoder, "BYTE_TYPE_TRAIL", HPDF_BYTE_TYPE_TRIAL); /* note the typo in the original name.. */
++	HARU_CLASS_CONST(ce_haruencoder, "BYTE_TYPE_TRAIL", HPDF_BYTE_TYPE_TRAIL); /* note the typo in the original name.. */
+ 	HARU_CLASS_CONST(ce_haruencoder, "BYTE_TYPE_UNKNOWN", HPDF_BYTE_TYPE_UNKNOWN);
+ 	
+ 	HARU_CLASS_CONST(ce_haruencoder, "WMODE_HORIZONTAL", HPDF_WMODE_HORIZONTAL);
